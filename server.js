@@ -19,7 +19,10 @@ mongoose.Promise = global.Promise;
 async function run(){
     try{
 
-        mongoose.connect(DB_URL);
+        mongoose.connect(process.env.DB_URL, { 
+            useNewUrlParser: true,
+            useUnifiedTopology: true 
+        });
         console.log("Successfully connected to the database mongoDB Atlas Server");
         
 
