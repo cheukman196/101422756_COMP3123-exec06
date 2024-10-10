@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "expressJS",
@@ -20,10 +21,10 @@
   "author": "Pritesh Patel",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
-    "express": "^4.16.3",
-    "mongoose": "^5.2.8"
+    "express": "^4.21.1",
+    "mongoose": "^8.7.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

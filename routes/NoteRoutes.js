@@ -8,11 +8,24 @@ const NoteModel = require('../models/note.js');
 router.post('/notes', async (req, res) => {
     try {
         // Validate request
-        if(!req.body.content) {
+        if(!req.body) {
             return res.status(400).send({
-                message: "Note content cannot be empty"
+                message: "Request cannot be empty"
             });
         }
+
+        if(!req.body.noteTitle){
+            return res.status(400).send({
+                message: "Note title cannot be empty"
+            });
+        }
+
+        if(!req.body.noteDescription){
+            return res.status(400).send({
+                message: "Note description cannot be empty"
+            });
+        }
+
         //TODO - Write your code here to save the note
         const newNote = new NoteModel(req.body);
         await newNote.save();
@@ -34,12 +47,6 @@ router.post('/notes', async (req, res) => {
 //http://mongoosejs.com/docs/api.html#find_find
 router.get('/notes', async (req, res) => {
     try {
-        // Validate request
-        if(!req.body.content) {
-            return res.status(400).send({
-                message: "Note content can not be empty"
-            });
-        }
         //TODO - Write your code here to returns all note
         const notes = await NoteModel.find({});
         res.status(200).send(notes);
@@ -56,14 +63,14 @@ router.get('/notes/:noteId', async (req, res) => {
     try {
     
         // Validate request
-        if(!req.body.content) {
+        if(!req.params.noteId) {
             return res.status(400).send({
-                message: "Note content can not be empty"
+                message: "NoteId cannot be empty"
             });
         }
 
         //TODO - Write your code here to return onlt one note using noteid
-        const note = await NoteModel.findById(req.body.noteid);
+        const note = await NoteModel.findById(req.params.noteId);
         if(!note)
             res.status(404).send({message: "No notes found by that id."});
             
@@ -80,14 +87,14 @@ router.put('/notes/:noteId', async (req, res) => {
 
     try {
         // Validate request
-        if(!req.body.content) {
+        if(!req.params.noteId) {
             return res.status(400).send({
-                message: "Note content can not be empty"
+                message: "NoteId cannot be empty"
             });
         }
 
         //TODO - Write your code here to update the note using noteid
-        const updatedNote = await NoteModel.findOneAndUpdate({_id: req.body.noteid}, req.body, {new: true});
+        const updatedNote = await NoteModel.findOneAndUpdate({_id: req.params.noteId}, req.body, {new: true});
         if (!updatedNote)
             res.status(404).send({message: "No notes found by that id."});
 
@@ -106,13 +113,14 @@ router.delete('/notes/:noteId', async (req, res) => {
     try {
     
         // Validate request
-        if(!req.body.content) {
+        if(!req.params.noteId) {
             return res.status(400).send({
-                message: "Note content can not be empty"
+                message: "NoteId cannot be empty"
             });
         }
+
         //TODO - Write your code here to delete the note using noteid
-        const note = await NoteModel.findOneAndDelete({_id: req.body.noteid});
+        const note = await NoteModel.findOneAndDelete({_id: req.params.noteId});
         if (!note)
             res.status(404).send({message: "No notes found by that id."});
 

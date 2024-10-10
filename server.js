@@ -19,10 +19,7 @@ mongoose.Promise = global.Promise;
 async function run(){
     try{
 
-        mongoose.connect(process.env.DB_URL, { 
-            useNewUrlParser: true,
-            useUnifiedTopology: true 
-        });
+        mongoose.connect(process.env.DB_URL);
         console.log("Successfully connected to the database mongoDB Atlas Server");
         
 
@@ -30,10 +27,10 @@ async function run(){
             res.send("<h1>Welcome to Note taking application - Week06 Exercise</h1>");
         });
         
-        app.use('/api/v1/note', noteRouter);        
+        app.use('/api/v1/', noteRouter);        
 
-        app.listen(8081, () => {
-            console.log("Server is listening on port 3000");
+        app.listen(process.env.PORT, () => {
+            console.log(`Server is listening on port ${process.env.PORT}`);
         });
 
     } catch (err) {
